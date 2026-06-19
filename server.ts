@@ -45,6 +45,12 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.get('/api-docs.json', (req, res) => {
+  res.json(swaggerDocs);
+});
+app.get('/swagger.json', (req, res) => {
+  res.json(swaggerDocs);
+});
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Initialize Database
@@ -955,7 +961,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     app.use(express.static('dist'));
-    app.get('*', (req, res) => {
+    app.get('*all', (req, res) => {
       res.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
     });
   }
